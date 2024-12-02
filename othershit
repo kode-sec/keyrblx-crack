@@ -25,7 +25,7 @@ end
 
 
 local function escape_char(c)
-    print("escape char was called!)
+    print("escape char was called!")
   return "\\" .. (escape_char_map[c] or string.format("u%04x", c:byte()))
 end
 
