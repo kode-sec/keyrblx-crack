@@ -25,19 +25,19 @@ end
 
 
 local function escape_char(c)
-    print("escape char was called! "..c)
+    print("escape char was called!)
   return "\\" .. (escape_char_map[c] or string.format("u%04x", c:byte()))
 end
 
 
 local function encode_nil(val)
-    print("encode nil: "..val)
+    print("encode nil:")
   return "null"
 end
 
 
 local function encode_table(val, stack)
-    pcall(function() print("encode table:".. val.. stack) end)
+    pcall(function() print("encode table") end)
   local res = {}
   stack = stack or {}
 
@@ -85,8 +85,8 @@ local function encode_string(val)
 end
 
 
-local function encode_number(val)\
-    print("encode number: "..val)
+local function encode_number(val)
+    print("encode number:")
   -- Check for NaN, -inf and inf
   if val ~= val or val <= -math.huge or val >= math.huge then
     error("unexpected number value '" .. tostring(val) .. "'")
@@ -149,7 +149,7 @@ local literal_map = {
 
 
 local function next_char(str, idx, set, negate)
-    print("next char : "..str)
+    print("next char :")
   for i = idx, #str do
     if set[str:sub(i, i)] ~= negate then
       return i
@@ -160,7 +160,7 @@ end
 
 
 local function decode_error(str, idx, msg)
-    print("decode error : "..str)
+    print("decode error : ")
   local line_count = 1
   local col_count = 1
   for i = 1, idx - 1 do
@@ -175,7 +175,7 @@ end
 
 
 local function codepoint_to_utf8(n)
-    print("codepoint_to_utf : "..n)
+    print("codepoint_to_utf : ")
   -- http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=iws-appendixa
   local f = math.floor
   if n <= 0x7f then
@@ -193,7 +193,7 @@ end
 
 
 local function parse_unicode_escape(s)
-    print("parseunicodeescape : "..s)
+    print("parseunicodeescape : ")
   local n1 = tonumber( s:sub(1, 4),  16 )
   local n2 = tonumber( s:sub(7, 10), 16 )
    -- Surrogate pair?
@@ -206,7 +206,7 @@ end
 
 
 local function parse_string(str, i)
-    print("parse string : "..str)
+    print("parse string : ")
   local res = ""
   local j = i + 1
   local k = j
@@ -248,7 +248,7 @@ end
 
 
 local function parse_number(str, i)
-    print("parse number : "..str)
+    print("parse number : ")
   local x = next_char(str, i, delim_chars)
   local s = str:sub(i, x - 1)
   local n = tonumber(s)
@@ -260,7 +260,7 @@ end
 
 
 local function parse_literal(str, i)
-    print("parse literal : "..str)
+    print("parse literal : ")
   local x = next_char(str, i, delim_chars)
   local word = str:sub(i, x - 1)
   if not literals[word] then
@@ -271,7 +271,7 @@ end
 
 
 local function parse_array(str, i)
-    print("parse array : "..str)
+    print("parse array : ")
   local res = {}
   local n = 1
   i = i + 1
@@ -299,7 +299,7 @@ end
 
 
 local function parse_object(str, i)
-    print("parse object : "..str)
+    print("parse object : ")
   local res = {}
   i = i + 1
   while 1 do
@@ -358,7 +358,7 @@ local char_func_map = {
 
 
 parse = function(str, idx)
-    print("parse : "..str)
+    print("parse : ")
   local chr = str:sub(idx, idx)
   local f = char_func_map[chr]
   if f then
@@ -369,7 +369,7 @@ end
 
 
 function json.decode(str)
-    print("json decode : "..str)
+    print("json decode : ")
   if type(str) ~= "string" then
     error("expected argument of type string, got " .. type(str))
   end
